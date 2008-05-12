@@ -1,0 +1,4 @@
+void c_function (void);
+VOID IDENTIFIER ( VOID ) ;
+void fun ( const int a ) ;
+VOID IDENTIFIER ( CONST INT IDENTIFIER ) ;
