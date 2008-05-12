@@ -1,0 +1,40 @@
+from ply import lex
+import tokens as tok_mod
+
+tokens = tok_mod.name_of.values()
+
+digit = r'[0-9]'
+nondigit = r'[a-zA-Z_]'
+H = r'[a-fA-F0-9]'
+E = r'[Ee][+-]?{D}+'
+FS = r'(f|F|l|L)'
+IS = r'(u|U|l|L)*'
+
+t_ignore = ' \t'
+
+keywords = { 'const': 'CONST',
+             'char' : 'CHAR',
+             'void' : 'VOID',
+             'int' : 'INT', 
+             'extern' : 'EXTERN'
+             }
+
+identifier  = r'(' + nondigit + r'(' + digit + r'|' + nondigit + r')*)' 
+literals = r';,:{}=()[].&!~-+*/%<>^|?'
+
+@lex.TOKEN(identifier)
+def t_IDENTIFIER (t):
+    t.type = keywords.get(t.value, 'IDENTIFIER')
+    return t
+
+def lexer(s):
+    'Lexes a single string'
+    lexer = lex.lex()
+    lexer.input(s)
+    lex_list = []
+    while True:
+        tok = lexer.token()
+        if not tok: break
+        lex_list.append(tok)
+    return lex_list
+
