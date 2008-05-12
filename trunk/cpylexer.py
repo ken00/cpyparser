@@ -1,4 +1,4 @@
-from ply import lex
+from ply import lex as LEX
 import tokens as tok_mod
 
 tokens = tok_mod.name_of.values()
@@ -22,7 +22,7 @@ keywords = { 'const': 'CONST',
 identifier  = r'(' + nondigit + r'(' + digit + r'|' + nondigit + r')*)' 
 literals = r';,:{}=()[].&!~-+*/%<>^|?'
 
-@lex.TOKEN(identifier)
+@LEX.TOKEN(identifier)
 def t_IDENTIFIER (t):
     t.type = keywords.get(t.value, 'IDENTIFIER')
     return t
@@ -33,7 +33,7 @@ def t_newline(t):
 
 def lex(s):
     'Lexes a single string'
-    lexer = lex.lex()
+    lexer = LEX.lex()
     lexer.input(s)
     lex_list = []
     while True:
