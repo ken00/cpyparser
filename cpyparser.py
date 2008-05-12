@@ -31,7 +31,7 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-def lexer(s):
+def lex(s):
     'Lexes a single string'
     lexer = lex.lex()
     lexer.input(s)
