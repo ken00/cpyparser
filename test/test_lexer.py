@@ -1,6 +1,9 @@
 import unittest
 import cpyparser as cpy
 import os
+from itertools import islice
+from collections import deque
+
 TEST_FILE = os.path.join( os.path.dirname(__file__), 'c_functions.txt')
 
 class TestLexer (unittest.TestCase):
@@ -21,12 +24,12 @@ class TestLexer (unittest.TestCase):
         return [ t.type for t in toklist ]
 
     def test_automata (self):
-        buff = open(TEST_FILE).readlines()
-        print buff[0]
-        res = self.get_type(cpy.lexer(buff[0]))
-        print buff[1]
-        self.assertEquals( buff[1].split(), res)
-
+        full = deque(open(TEST_FILE).readlines())
+        while full:
+            a = full.popleft()
+            b = full.popleft()
+            res = self.get_type(cpy.lexer(a))
+            self.assertEquals( b.split(), res)
 
 if __name__ == '__main__':
     unittest.main()
