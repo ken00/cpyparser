@@ -27,6 +27,10 @@ def t_IDENTIFIER (t):
     t.type = keywords.get(t.value, 'IDENTIFIER')
     return t
 
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
 def lexer(s):
     'Lexes a single string'
     lexer = lex.lex()
